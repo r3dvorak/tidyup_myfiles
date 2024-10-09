@@ -20,7 +20,8 @@
  * @license     GNU General Public License version 3 or later; see LICENSE
  */
 
-// Load needed Namespaces
+// Load needed Namespaces for Joomla 4
+/* J4
 use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Http\HttpFactory;
@@ -34,18 +35,50 @@ use Joomla\Input\Input;
 use Joomla\Session\Session;
 use Joomla\Session\SessionInterface;
 use Joomla\Utilities\ArrayHelper;
+*/
+// Load needed Namespaces for Joomla 5
+use Joomla\CMS\Application\SiteApplication;
+use Joomla\CMS\Factory;
+use Joomla\Http\HttpFactory;
+use Joomla\CMS\Language\Language;
+use Joomla\CMS\Language\Transliterate;
+use Joomla\CMS\Profiler\Profiler;
+use Joomla\Database\DatabaseInterface;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
+use Joomla\Input\Input;
+use Joomla\Session\Session;
+use Joomla\Session\SessionInterface;
+use Joomla\Utilities\ArrayHelper;
 
-header('Content-type: text/html; charset=utf-8');
+// Set the content type header to ensure UTF-8 encoding
+header('Content-Type: text/html; charset=utf-8');
 
+// Check if output buffering is already started, and start if necessary
 $obFlashStarted = false;
 
-if (ob_get_level() == 0) {
+if (ob_get_level() === 0) {
     ob_start();
     $obFlashStarted = true;
 }
 
-// TODO: Check PHP Version and Joomla Version
+// Check PHP Version and Joomla Version
+use Joomla\CMS\Version;
 
+// Check PHP Version
+if (version_compare(PHP_VERSION, '8.1.0', '<')) {
+    throw new Exception('This script requires PHP 8.1.0 or higher.');
+}
+
+// Check Joomla Version
+$joomlaVersion = new Version();
+$minJoomlaVersion = '5.0.0';
+
+if (version_compare($joomlaVersion->getShortVersion(), $minJoomlaVersion, '<')) {
+    throw new Exception("This script requires Joomla $minJoomlaVersion or higher.");
+}
+
+////////////////////////////////////////////* */
 /**
  * Version
  */
